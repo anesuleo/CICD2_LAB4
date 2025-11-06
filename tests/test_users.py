@@ -14,6 +14,9 @@ Base.metadata.create_all(bind=engine)
 #Test database client
 @pytest.fixture
 def client():
+    Base.metadata.drop_all(bind=engine)  #Clear database after each test run to avoid conflicts
+    Base.metadata.create_all(bind=engine)
+
     def override_get_db():
         db = TestingSessionLocal()
         try:
